@@ -11,7 +11,7 @@ class ReportMenuTest {
 
     @BeforeEach
     void setUp() {
-        reportMenu = new ReportMenu(null);
+        reportMenu = new ReportMenu();
     }
 
     @Test

@@ -1,31 +1,17 @@
 package com.kaungmaw;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Scanner;
 
 public class Menu {
 
     Scanner sc;
-    private Connection conn;
 
     public Menu() {
         sc = new Scanner(System.in);
     }
 
-    public Connection connectDatabase() {
-        String url = "jdbc:mysql://localhost:3306/world_population";
-        String username = "root";
-        String password = "";
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(url, username, password);
-            conn = connection;
-            System.out.println("Database is connected");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return connection;
+    public void connectDatabase() {
+        DatabaseConnection.getInstance();
     }
 
     public void displayMenu() {
@@ -70,17 +56,17 @@ public class Menu {
         }
 
         switch (input) {
-            case "1" -> new InsertNewPopulation(conn);
+            case "1" -> new InsertNewPopulation();
             case "2" -> {
-                UpdatePopulation updatePopulation = new UpdatePopulation(conn);
+                UpdatePopulation updatePopulation = new UpdatePopulation();
                 updatePopulation.update();
             }
             case "3" -> {
-                ReRank reRank = new ReRank(conn);
+                ReRank reRank = new ReRank();
                 reRank.reRank(reRank.getCountryNamesInDescSortByYearOfPopulation("2024"));
             }
             case "4" -> {
-                ReportMenu menu = new ReportMenu(conn);
+                ReportMenu menu = new ReportMenu();
                 menu.getUserMenuChoice();
 
             }

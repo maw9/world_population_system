@@ -22,6 +22,7 @@ class MenuTest {
 
     @Test
     void validateMenuChoice() {
+        assertFalse(menu.validateMenuChoice(""));
         assertTrue(menu.validateMenuChoice("1"));
         assertTrue(menu.validateMenuChoice("5"));
         assertFalse(menu.validateMenuChoice("-1"));

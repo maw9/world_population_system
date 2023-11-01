@@ -1,15 +1,8 @@
 package com.kaungmaw;
 
-import java.sql.Connection;
 import java.util.Scanner;
 
 public class ReportMenu {
-
-    private final Connection conn;
-
-    public ReportMenu(Connection conn) {
-        this.conn = conn;
-    }
 
     public void promptReportOption() {
         System.out.println("Report");
@@ -41,11 +34,11 @@ public class ReportMenu {
 
         switch (input) {
             case "1" -> {
-                TopTenPopulatedCountries reportOne = new TopTenPopulatedCountries(conn);
+                TopTenPopulatedCountries reportOne = new TopTenPopulatedCountries();
                 reportOne.displayTopTenPopulatedCountries();
             }
             case "2" -> {
-                TopTenCountriesWithLargestArea reportTwo = new TopTenCountriesWithLargestArea(conn);
+                TopTenCountriesWithLargestArea reportTwo = new TopTenCountriesWithLargestArea();
                 reportTwo.displayTopTenCountriesWithLargestArea();
             }
         }

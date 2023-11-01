@@ -3,7 +3,6 @@ package com.kaungmaw;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,8 +16,8 @@ class ReRankTestIT {
 
     @BeforeAll
     static void setUp() {
-        Connection conn = new Menu().connectDatabase();
-        reRank = new ReRank(conn);
+        new Menu().connectDatabase();
+        reRank = new ReRank();
     }
 
     @Test

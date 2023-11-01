@@ -21,7 +21,7 @@ class UpdatePopulationTest {
         countryNames.add("Canada");
         countryNames.add("Korea");
         countryNames.add("Singapore");
-        updatePopulation = new UpdatePopulation(null);
+        updatePopulation = new UpdatePopulation();
     }
 
     @Test

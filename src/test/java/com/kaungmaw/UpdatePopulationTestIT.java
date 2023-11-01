@@ -3,10 +3,9 @@ package com.kaungmaw;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UpdatePopulationTestIT {
 
@@ -14,8 +13,8 @@ class UpdatePopulationTestIT {
 
     @BeforeAll
     static void setUp() {
-        Connection conn = new Menu().connectDatabase();
-        updatePopulation = new UpdatePopulation(conn);
+        new Menu().connectDatabase();
+        updatePopulation = new UpdatePopulation();
     }
 
     @Test

@@ -9,8 +9,8 @@ public class ReRank {
 
     private final Connection conn;
 
-    public ReRank(Connection conn) {
-        this.conn = conn;
+    public ReRank() {
+        conn = DatabaseConnection.getInstance();
     }
 
     public ResultSet getCountryNamesInDescSortByYearOfPopulation(String year) {
@@ -23,18 +23,6 @@ public class ReRank {
         }
     }
 
-    public void reRank(ResultSet countryNames) {
-        try {
-            int count = 1;
-            while (countryNames.next()) {
-                updateCountryRankByName(countryNames.getString(1), count++);
-            }
-            System.out.println("Countries' world ranks updated.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public void updateCountryRankByName(String name, int rank) {
         try {
             PreparedStatement ps = conn.prepareStatement("UPDATE population SET world_rank = ? WHERE country_name = ?");
@@ -43,6 +31,18 @@ public class ReRank {
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void reRank(ResultSet countryNames) {
+        try {
+            int count = 1;
+            while (countryNames.next()) {
+                updateCountryRankByName(countryNames.getString(1), count++);
+            }
+            System.out.println("Countries' world ranks updated.");
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }

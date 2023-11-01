@@ -9,11 +9,12 @@ import java.util.Scanner;
 public class InsertNewPopulation {
 
     Connection conn;
-    CSVFileReader csvFileReader;
+    ICSVFileReader csvFileReader;
 
-    public InsertNewPopulation(Connection conn) {
-        this.conn = conn;
-        csvFileReader = new CSVFileReader();
+    public InsertNewPopulation() {
+        conn = DatabaseConnection.getInstance();
+        FileReaderFactory factory = new FileReaderFactory();
+        csvFileReader = factory.getFileReader(FileReaderType.OpenCSV);
         insert();
     }
 
@@ -44,7 +45,9 @@ public class InsertNewPopulation {
 
     private void updateNewPopulationByCountryName(String countryName, int population) {
         try {
-            PreparedStatement ps = conn.prepareStatement("UPDATE population SET 2024_population = ? WHERE country_name = ?");
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE population SET 2024_population = ? WHERE country_name = ?"
+            );
             ps.setInt(1, population);
             ps.setString(2, countryName);
             ps.executeUpdate();
@@ -55,7 +58,9 @@ public class InsertNewPopulation {
     }
 
     private void addNewColumn() throws Exception {
-        PreparedStatement ps = conn.prepareStatement("ALTER TABLE population ADD 2024_population int(11)");
+        PreparedStatement ps = conn.prepareStatement(
+                "ALTER TABLE population ADD 2024_population int(11)"
+        );
         ps.executeUpdate();
         ps.close();
     }

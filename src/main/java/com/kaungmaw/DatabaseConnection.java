@@ -1,4 +1,3 @@
-/*
 package com.kaungmaw;
 
 import java.sql.Connection;
@@ -6,14 +5,14 @@ import java.sql.DriverManager;
 
 public class DatabaseConnection {
 
-    private static String username = "root";
-    private static String password = "";
     private static boolean isCreated = false;
     private static Connection conn;
 
     public static Connection getInstance() {
         if (!isCreated) {
             try {
+                String username = "root";
+                String password = "";
                 Class.forName("com.mysql.cj.jdbc.Driver"); // Checking Driver class existence by Driver file path
                 conn = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/world_population",
@@ -33,4 +32,3 @@ public class DatabaseConnection {
     private DatabaseConnection() {}
 
 }
-*/

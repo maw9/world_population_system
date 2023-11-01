@@ -6,8 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.LinkedList;
 
-public class CSVFileReader {
+public class OpenCSVFileReader implements ICSVFileReader {
 
+    @Override
     public LinkedList<Population> read(String filePath) throws FileNotFoundException {
         LinkedList<Population> latestPopulation = new LinkedList<>();
 

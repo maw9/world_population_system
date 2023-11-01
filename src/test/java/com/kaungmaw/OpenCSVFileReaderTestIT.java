@@ -8,13 +8,14 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CSVFileReaderTestIT {
+class OpenCSVFileReaderTestIT {
 
-    static CSVFileReader csvFileReader;
+    static ICSVFileReader csvFileReader;
 
     @BeforeAll
     static void setUp() {
-        csvFileReader = new CSVFileReader();
+        FileReaderFactory factory = new FileReaderFactory();
+        csvFileReader = factory.getFileReader(FileReaderType.OpenCSV);
     }
 
     @Test()

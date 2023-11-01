@@ -3,7 +3,6 @@ package com.kaungmaw;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -17,8 +16,8 @@ class TopTenCountriesWithLargestAreaTestIT {
 
     @BeforeAll
     static void setUp() {
-        Connection conn = new Menu().connectDatabase();
-        topTenCountriesWithLargestArea = new TopTenCountriesWithLargestArea(conn);
+        new Menu().connectDatabase();
+        topTenCountriesWithLargestArea = new TopTenCountriesWithLargestArea();
     }
 
 

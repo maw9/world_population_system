@@ -11,7 +11,7 @@ class TopTenCountriesWithLargestAreaTest {
 
     @BeforeEach
     void setUp() {
-        reportTwo = new TopTenCountriesWithLargestArea(null);
+        reportTwo = new TopTenCountriesWithLargestArea();
     }
 
     @Test

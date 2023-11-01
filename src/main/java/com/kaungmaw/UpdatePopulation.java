@@ -12,8 +12,8 @@ public class UpdatePopulation {
 
     private final Connection conn;
 
-    public UpdatePopulation(Connection conn) {
-        this.conn = conn;
+    public UpdatePopulation() {
+        conn = DatabaseConnection.getInstance();
     }
 
     public void update() {
@@ -33,6 +33,10 @@ public class UpdatePopulation {
         }
     }
 
+    public boolean isPopulationInRightFormat(String population) {
+        return Pattern.matches("\\d+", population);
+    }
+
     public String getPopulation(Scanner sc) {
         boolean isPopulationValid = false;
         String population = "";
@@ -48,8 +52,13 @@ public class UpdatePopulation {
         return population;
     }
 
-    public boolean isPopulationInRightFormat(String population) {
-        return Pattern.matches("\\d+", population);
+    public boolean isYearInRightFormat(String year) {
+        return Pattern.matches("\\d{4}", year);
+    }
+
+    public boolean isYearInValidRange(String year) {
+        int yearInInt = Integer.parseInt(year);
+        return (yearInInt >= 2020 && yearInInt <= 2024);
     }
 
     public String getYearOfPopulation(Scanner sc) {
@@ -69,15 +78,6 @@ public class UpdatePopulation {
             }
         }
         return year;
-    }
-
-    public boolean isYearInRightFormat(String year) {
-        return Pattern.matches("\\d{4}", year);
-    }
-
-    public boolean isYearInValidRange(String year) {
-        int yearInInt = Integer.parseInt(year);
-        return (yearInInt >= 2020 && yearInInt <= 2024);
     }
 
     public String getCountryName(Scanner sc) {
@@ -116,7 +116,9 @@ public class UpdatePopulation {
     }
 
     public void updatePopulationByCountryName(String countryName, String year, String newValue) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("UPDATE population SET " + year + "_population = ? WHERE country_name = ?");
+        PreparedStatement ps = conn.prepareStatement(
+                "UPDATE population SET " + year + "_population = ? WHERE country_name = ?"
+        );
         ps.setInt(1, Integer.parseInt(newValue));
         ps.setString(2, countryName);
         ps.executeUpdate();

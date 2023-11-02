@@ -70,7 +70,10 @@ public class Menu {
         }
 
         switch (input) {
-            case "1" -> new InsertNewPopulation(conn);
+            case "1" -> {
+                InsertNewPopulation insertNewPopulation = new InsertNewPopulation(conn);
+                insertNewPopulation.insert();
+            }
             case "2" -> {
                 UpdatePopulation updatePopulation = new UpdatePopulation(conn);
                 updatePopulation.update();

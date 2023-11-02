@@ -1,8 +1,7 @@
 package com.kaungmaw;
 
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -14,7 +13,6 @@ public class InsertNewPopulation {
     public InsertNewPopulation(Connection conn) {
         this.conn = conn;
         csvFileReader = new CSVFileReader();
-        insert();
     }
 
     public void insert() {
@@ -29,7 +27,12 @@ public class InsertNewPopulation {
         }
 
         try {
-            addNewColumn();
+            if (!isColumnAlreadyExist("2024_population")) {
+                addNewColumn();
+            } else {
+                System.out.println("2024_population column is already exist.");
+                return;
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage() + ". Try again.");
             return;
@@ -42,7 +45,7 @@ public class InsertNewPopulation {
         System.out.println("Successfully added new population data.");
     }
 
-    private void updateNewPopulationByCountryName(String countryName, int population) {
+    public void updateNewPopulationByCountryName(String countryName, int population) {
         try {
             PreparedStatement ps = conn.prepareStatement("UPDATE population SET 2024_population = ? WHERE country_name = ?");
             ps.setInt(1, population);
@@ -54,10 +57,17 @@ public class InsertNewPopulation {
         }
     }
 
-    private void addNewColumn() throws Exception {
+    public void addNewColumn() throws Exception {
         PreparedStatement ps = conn.prepareStatement("ALTER TABLE population ADD 2024_population int(11)");
         ps.executeUpdate();
         ps.close();
+    }
+
+    public boolean isColumnAlreadyExist(String columnName) throws SQLException {
+        DatabaseMetaData metaData = conn.getMetaData();
+        String tableName = "population";
+        ResultSet rs = metaData.getColumns(null, null, tableName, columnName);
+        return rs.next();
     }
 
 }

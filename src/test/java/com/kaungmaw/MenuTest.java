@@ -3,8 +3,7 @@ package com.kaungmaw;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MenuTest {
 
@@ -13,6 +12,11 @@ class MenuTest {
     @BeforeEach
     void setUp() {
         menu = new Menu();
+    }
+
+    @Test
+    void connectDatabase() {
+        assertNotNull(menu.connectDatabase());
     }
 
     @Test

@@ -1,8 +1,7 @@
 package com.kaungmaw;
 
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -11,10 +10,9 @@ public class InsertNewPopulation {
     Connection conn;
     ICSVFileReader csvFileReader;
 
-    public InsertNewPopulation() {
+    public InsertNewPopulation(ICSVFileReader csvFileReader) {
         conn = DatabaseConnection.getInstance();
-        FileReaderFactory factory = new FileReaderFactory();
-        csvFileReader = factory.getFileReader(FileReaderType.OpenCSV);
+        this.csvFileReader = csvFileReader;
         insert();
     }
 
@@ -30,7 +28,12 @@ public class InsertNewPopulation {
         }
 
         try {
-            addNewColumn();
+            if (!isColumnAlreadyExist("2024_population")) {
+                addNewColumn();
+            } else {
+                System.out.println("2024_population column is already exist.");
+                return;
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage() + ". Try again.");
             return;
@@ -63,6 +66,13 @@ public class InsertNewPopulation {
         );
         ps.executeUpdate();
         ps.close();
+    }
+
+    public boolean isColumnAlreadyExist(String columnName) throws SQLException {
+        DatabaseMetaData metaData = conn.getMetaData();
+        String tableName = "population";
+        ResultSet rs = metaData.getColumns(null, null, tableName, columnName);
+        return rs.next();
     }
 
 }

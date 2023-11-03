@@ -56,7 +56,11 @@ public class Menu {
         }
 
         switch (input) {
-            case "1" -> new InsertNewPopulation();
+            case "1" -> {
+                FileReaderFactory factory = new FileReaderFactory();
+                ICSVFileReader fileReader = factory.getFileReader(FileReaderType.OpenCSV);
+                new InsertNewPopulation(fileReader);
+            }
             case "2" -> {
                 UpdatePopulation updatePopulation = new UpdatePopulation();
                 updatePopulation.update();
